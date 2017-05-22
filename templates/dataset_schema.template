@@ -1,0 +1,147 @@
+{
+  "title": "{{ dataset.brief_title }}",
+  "identifier": {
+    "identifier": "http://www.immport.org/immport-open/public/study/study/displayStudyDetail/{{ dataset.study_accession }}",
+    "identifierSource": "http://www.immport.org"
+  },
+  "producedBy": {
+    {%- include 'study_schema.template' %}
+  },
+  {%- if dataset.creators | count != 0 %}
+  "creators": [
+  {%- include 'creator_schema.template' %}
+  ],
+  {% endif -%}
+  {%- if dataset.primaryPublications | count != 0 %}
+  "primaryPublications": [
+  {%- include 'publication_schema.template' %}
+  ],
+  {% endif -%}
+  {% if dataset.types | count != 0 -%}
+  "types": [
+    {%- for type in dataset.types %}
+      {
+        "value": "{{type}}"
+      {% if loop.last -%}
+      }
+      {%- else -%}
+      },
+      {%- endif -%}
+      {%- endfor %}
+  ],
+  {%- endif %}
+  "dates": [
+      {% if dataset.actual_start_date -%}
+      {
+          "date": "{{ dataset.actual_start_date }}",
+          "type": {
+              "value": "actual_start_date"
+          }
+      },
+      {% endif -%}
+      {% if dataset.actual_completion_date -%}
+      {
+          "date": "{{ dataset.actual_completion_date }}",
+          "type": {
+              "value": "actual_completion_date"
+          }
+      },
+      {% endif -%}
+      {
+          "date": "{{ dataset.final_public_release_date }}",
+          "type": {
+              "value": "final_public_release_date"
+          }
+      }
+  ],
+  "availability": "Available for download after registration with ImmPort",
+  "refinement": "Curated",
+  {% if dataset.types | count != 0 -%}
+  "dimensions": [
+      {%- include 'dimension_schema.template' %}
+  ],
+  {%- endif %}
+  {% if dataset.treatments | count != 0 -%}
+  "isAbout": [
+      {%- for treatment in dataset.treatments %}
+        {
+          "name": "{{treatment.name}}"
+        {% if loop.last -%}
+        }
+        {%- else -%}
+        },
+        {%- endif -%}
+      {%- endfor %}
+  ],
+  {%- endif %}
+  "distributions": [
+      {
+          "identifier": {
+              "identifier": "{{ dataset.study_accession}}",
+              "identifierSource": "ImmPort"
+          },
+          "title": "{{ dataset.brief_title}}",
+          "access": {
+              "landingPage": "http://www.immport.org",
+              "accessURL": "http://www.immport.org/immport-open/public/study/study/displayStudyDetail/{{ dataset.study_accession}}",
+              "types": [
+                  {
+                      "value": "Download tab separated files"
+                  },
+                  {
+                      "value": "Download MySQL files and schema"
+                  }
+              ],
+              "authorizations": [
+                {
+                    "value": "Registraton with ImmPort required"
+                }
+              ]
+          },
+          "storedIn": {
+              "name": "ImmPort",
+              "types": [
+                {
+                  "value": "primary repository"
+                }
+              ]
+         },
+         "licenses": [
+           {
+             "name": "ImmPort User Agreement",
+             "version": "1.0",
+             "extraProperties": [
+               {
+                 "category": "Link to User Agreement",
+                 "values": [
+                   {
+                     "value": "http://www.immport.org/agreement"
+                   }
+                 ]
+               }
+             ]
+           }
+         ]
+      }
+  ],
+  "acknowledges": [
+  {%- include 'grant_schema.template' %}
+  ],
+  "licenses": [
+    {
+      "name": "ImmPort User Agreement",
+      "version": "1.0",
+      "extraProperties": [
+        {
+          "category": "Link to User Agreement",
+          "values": [
+            {
+              "value": "http://www.immport.org/agreement"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "description": "{{ dataset.brief_description }}"
+}

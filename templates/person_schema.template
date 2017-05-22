@@ -1,0 +1,21 @@
+    {%- for creator in dataset.creators %}
+    {
+      "firstName": "{{ creator.firstName }}",
+      "lastName": "{{ creator.lastName }}",
+      "email": "{{ creator.email }}",
+      "affiliations": [
+          {
+             "name": "{{ creator.affiliation }}"
+          }
+      ],
+      "roles": [
+          {
+             "value": "{{ creator.role }}"
+          }
+      ]
+    {% if loop.last -%}
+    }
+    {%- else -%}
+    },
+    {%- endif -%}
+    {%- endfor -%}

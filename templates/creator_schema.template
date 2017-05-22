@@ -1,0 +1,54 @@
+    {%- for creator in dataset.creators %}
+    {%- if creator.role == "Principal Investigator" %}
+    {
+      "firstName": "{{ creator.firstName }}",
+      "lastName": "{{ creator.lastName }}",
+      "email": "{{ creator.email }}",
+      "affiliations": [
+          {
+             "name": "{{ creator.affiliation }}"
+          }
+      ],
+      "roles": [
+          {
+             "value": "{{ creator.role }}"
+          }
+      ]
+    },
+    {%- endif -%}
+    {%- endfor -%}
+    {%- for organization in dataset.organizations %}
+    {
+      "name": "{{ organization.name}}",
+      "extraProperties": [
+        {
+          "category": "Catgory",
+          "values": [
+            {
+              "value": "{{ organization.category }}"
+            }
+          ]
+        },
+        {
+          "category": "External Id",
+          "values": [
+            {
+              "value": "{{ organization.external_id }}"
+            }
+          ]
+        },
+        {
+          "category": "Description",
+          "values": [
+            {
+              "value": "{{ organization.description }}"
+            }
+          ]
+        }
+      ]
+    {% if loop.last -%}
+    }
+    {%- else -%}
+    },
+    {%- endif -%}
+    {%-  endfor -%}

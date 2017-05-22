@@ -1,0 +1,26 @@
+
+    {%- for dimension in dataset.dimensions -%}
+      {%- if dimension.obj_type == "experiment" -%}
+      {
+        "name": {
+            "value": "{{ dimension.name }}"
+        },
+        "description": "{{ dimension.description }}",
+        "types": [
+            {
+               "value": "{{ dimension.type }}"
+            }
+        ]
+      {%- endif %}
+      {%- if dimension.obj_type != "experiment" -%}
+      {
+        "name": {
+            "value": "{{ dimension.name }}"
+        }
+      {%- endif %}
+      {% if loop.last -%}
+        }
+      {% else -%}
+        },
+      {%- endif -%}
+    {%- endfor -%}

@@ -1,0 +1,67 @@
+  "name": "{{ dataset.brief_title }}",
+  "performedBy": [
+  {%- include 'person_schema.template' %}
+  ],
+  {%- if dataset.studyGroups | count != 0 %}
+  "studyGroups": [
+      {%- for group in dataset.studyGroups %}
+        {
+          "name": "{{group.name}}",
+          "size": {{group.size}}
+        {% if loop.last -%}
+        }
+        {%- else -%}
+        },
+        {%- endif -%}
+        {%- endfor %}
+  ],
+  {% endif -%}
+  {%- if dataset.reagents | count != 0 %}
+  "usesReagent": [
+      {%- for reagent in dataset.reagents %}
+        {
+          "name": "{{reagent.name}}"
+        {% if loop.last -%}
+        }
+        {%- else -%}
+        },
+        {%- endif -%}
+        {%- endfor %}
+  ],
+  {% endif -%}
+  {%- if dataset.selectionCriteria | count != 0 %}
+  "selectionCriteria": [
+      {%- for criteria in dataset.selectionCriteria %}
+        {
+          "category": "{{criteria.category}}",
+          "values": [
+              "{{criteria.criterion}}"
+          ]
+        {% if loop.last -%}
+        }
+        {%- else -%}
+        },
+        {%- endif -%}
+        {%- endfor %}
+  ],
+  {% endif -%}
+  {# Remove for now, see what happens in the future
+  {%- if dataset.keywords | count != 0 %}
+  "keywords": [
+      {%- for keyword in dataset.keywords %}
+        {
+          "value": "{{keyword.term}}: {{keyword.defintion}}"
+        {% if loop.last -%}
+        }
+        {%- else -%}
+        },
+        {%- endif -%}
+        {%- endfor %}
+  ],
+  {% endif -%}
+  #}
+  "types": [
+      {
+          "value": "{{ dataset.type }}"
+      }
+  ]

@@ -1,0 +1,22 @@
+{%- for grant in dataset.organizations %}
+    {
+      "identifier": {
+        "identifier": "{{ grantexternal_id}}"
+      },
+      "name": "{{ grant.name}}",
+      "extraProperties": [
+        {
+          "category": "Link",
+          "values": [
+            {
+              "value": "{{ grant.link }}"
+            }
+          ]
+        }
+      ]
+{%- if loop.last -%}
+    }
+{%- else -%}
+    },
+{%- endif -%}
+{%-  endfor -%}

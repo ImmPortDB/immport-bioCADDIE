@@ -1,0 +1,6 @@
+The model classes included in this distribution represent a subset of the
+classes of information available in the ImmPort model, only classes needed for
+creating the DATS instances are represented. Also the classes in the ImmPort
+model to support controlled vocabularies are not included, normally many of
+the primary class columns would have foreign key references to the controlled
+vocabulary classes.
